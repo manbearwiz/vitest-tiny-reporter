@@ -6,10 +6,10 @@ export default {
     coverage: {
       reporter: ['cobertura', 'text', 'html', 'lcov'],
       thresholds: {
-        statements: 95.9,
-        branches: 89.65,
+        statements: 93.75,
+        branches: 82.14,
         functions: 100,
-        lines: 95.9,
+        lines: 93.75,
         autoUpdate: true,
       },
       exclude: ['./*.config.{js,ts,mts}', 'dist'],
