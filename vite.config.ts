@@ -1,6 +1,22 @@
 import type { UserConfig } from 'vitest/config';
 
 export default {
+  build: {
+    emptyOutDir: false,
+    lib: {
+      entry: 'src/index.ts',
+      name: 'vitest-tiny-reporter',
+    },
+    rollupOptions: {
+      external: ['tinyrainbow'],
+      output: {
+        globals: {
+          tinyrainbow: 'tinyrainbow',
+        },
+      },
+    },
+    sourcemap: true,
+  },
   test: {
     environment: 'happy-dom',
     coverage: {
