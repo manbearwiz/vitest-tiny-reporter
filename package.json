@@ -59,5 +59,6 @@
       "require": "./dist/vitest-tiny-reporter.umd.cjs",
       "types": "./dist/types/index.d.ts"
     }
-  }
+  },
+  "sideEffects": false
 }
