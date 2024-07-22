@@ -2,12 +2,13 @@
   "name": "vitest-tiny-reporter",
   "version": "0.0.0-development",
   "description": "Tiny reporter for vitest",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "files": ["/dist"],
+  "types": "dist/types/index.d.ts",
+  "files": ["dist"],
   "keywords": ["vitest", "reporter", "lefthook"],
   "scripts": {
-    "build": "tsc",
+    "build": "npx concurrently npm:build:*",
+    "build:vite": "vite build",
+    "build:tsc": "tsc -b tsconfig.types.json",
     "test": "vitest run",
     "coverage": "vitest run --coverage",
     "test:watch": "vitest --watch --coverage --ui",
@@ -32,12 +33,14 @@
     "@commitlint/config-angular": "^19.3.0",
     "@tsconfig/recommended": "^1.0.3",
     "@tsconfig/strictest": "^2.0.2",
+    "@tsconfig/vite-react": "^3.0.2",
     "@types/node": "^20.12.12",
     "@vitest/coverage-v8": "^2.0.3",
     "@vitest/ui": "^2.0.3",
     "happy-dom": "^14.12.3",
     "semantic-release": "^22.0.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vite": "^5.3.4"
   },
   "dependencies": {
     "@vitest/runner": "^2.0.3",
@@ -46,5 +49,15 @@
   },
   "release": {
     "branches": ["main"]
+  },
+  "type": "module",
+  "main": "./dist/vitest-tiny-reporter.umd.cjs",
+  "module": "./dist/vitest-tiny-reporter.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vitest-tiny-reporter.js",
+      "require": "./dist/vitest-tiny-reporter.umd.cjs",
+      "types": "./dist/types/index.d.ts"
+    }
   }
 }
