@@ -1,0 +1,48 @@
+{
+  "name": "vitest-tiny-reporter",
+  "version": "0.0.0-development",
+  "description": "Tiny reporter for vitest",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["/dist"],
+  "keywords": ["vitest", "reporter", "lefthook"],
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
+    "test:watch": "vitest --watch --coverage --ui",
+    "prepublish": "npm run build",
+    "semantic-release": "semantic-release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/manbearwiz/vitest-tiny-reporter.git"
+  },
+  "author": "Kevin Brey",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/manbearwiz/vitest-tiny-reporter/issues"
+  },
+  "homepage": "https://github.com/manbearwiz/vitest-tiny-reporter#readme",
+  "devDependencies": {
+    "@biomejs/biome": "1.8.3",
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-angular": "^19.3.0",
+    "@tsconfig/recommended": "^1.0.3",
+    "@tsconfig/strictest": "^2.0.2",
+    "@types/node": "^20.12.12",
+    "@vitest/coverage-v8": "^2.0.3",
+    "@vitest/ui": "^2.0.3",
+    "happy-dom": "^12.9.1",
+    "semantic-release": "^22.0.0",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@vitest/runner": "^2.0.3",
+    "tinyrainbow": "^1.2.0",
+    "vitest": "^2.0.3"
+  },
+  "release": {
+    "branches": ["main"]
+  }
+}

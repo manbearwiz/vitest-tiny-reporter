@@ -1,0 +1,25 @@
+colors: false
+no_tty: true
+output:
+  - failure
+
+pre-commit:
+  parallel: true
+  commands:
+    format:
+      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}"
+      run: npx @biomejs/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
+      stage_fixed: true
+    test:
+      glob: "*.ts"
+      run: npx vitest related --silent --no-color --no-clearScreen --run {staged_files}
+      fail_text: "Tests failed"
+
+pre-push:
+  parallel: true
+  commands:
+    test:
+      run: npx vitest --run --coverage --silent --no-color --no-clearScreen
+      fail_text: "Tests failed"
+    check-format:
+      run: npx @biomejs/biome check --no-errors-on-unmatched --files-ignore-unknown=true .
