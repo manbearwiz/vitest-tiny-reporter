@@ -12,7 +12,9 @@
     "coverage": "vitest run --coverage",
     "test:watch": "vitest --watch --coverage --ui",
     "prepublish": "npm run build",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "lint": "npx @biomejs/biome check",
+    "lint:fix": "npx @biomejs/biome check --write"
   },
   "repository": {
     "type": "git",
