@@ -70,3 +70,5 @@ export class TinyReporter implements Reporter {
     );
   }
 }
+
+export default TinyReporter;
