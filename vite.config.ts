@@ -23,7 +23,7 @@ export default {
       reporter: ['cobertura', 'text', 'html', 'lcov'],
       thresholds: {
         statements: 93.75,
-        branches: 82.14,
+        branches: 82.75,
         functions: 100,
         lines: 93.75,
         autoUpdate: true,
