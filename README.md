@@ -36,9 +36,25 @@ Or you can use the reporter from the command line:
 vitest --reporter vitest-tiny-reporter
 ```
 
+Or with lefthook:
+
+```yml
+pre-commit:
+  parallel: true
+  commands:
+    test:
+      glob: "*.ts"
+      run: npx vitest related --reporter=vitest-tiny-reporter --run {staged_files}
+      fail_text: "Tests failed"
+      env:
+        TERM: dumb
+```
+
 ## Output
 
-The output will look like this:
+### Shell
+
+In a shell, the output will look like this:
 
 ```sh
 $ vitest
@@ -46,3 +62,15 @@ $ vitest
  Test Files  1 failed (1)
       Tests  1 failed | 10 passed (11)
 ```
+
+### VSCode
+
+When used with lefthook and committing in the VSCode UI, `vitest-tiny-reporter` shows actual usefull information.
+
+Default reporter:
+
+<img width="272" alt="image" src="https://github.com/user-attachments/assets/b68d930d-05f8-4281-8b14-9f8843e7dfb4">
+
+Tiny reporter:
+
+<img width="272" alt="image" src="https://github.com/user-attachments/assets/312c4f5d-e56f-4662-bf2b-d395339031ce">
