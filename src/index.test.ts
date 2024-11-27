@@ -1,14 +1,7 @@
 import c from 'tinyrainbow';
-import {
-  type Task,
-  type Vitest,
-  beforeEach,
-  describe,
-  expect,
-  it,
-  vi,
-} from 'vitest';
-import { TinyReporter } from './index';
+import { type RunnerTask, beforeEach, describe, expect, it, vi } from 'vitest';
+import type { Vitest } from 'vitest/node';
+import TinyReporter from './index';
 
 const mockVitestContext = {
   state: {
@@ -42,11 +35,11 @@ describe('TinyReporter', () => {
       {
         result: { state: 'pass' },
         type: 'test',
-      } as Task,
+      } as RunnerTask,
       {
         result: { state: 'pass' },
         type: 'test',
-      } as Task,
+      } as RunnerTask,
     ]);
     mockVitestContext.state.getUnhandledErrors.mockReturnValueOnce([]);
     reporter.onFinished();
@@ -63,7 +56,7 @@ describe('TinyReporter', () => {
       {
         result: { state: 'fail' },
         type: 'test',
-      } as Task,
+      } as RunnerTask,
     ]);
     mockVitestContext.state.getUnhandledErrors.mockReturnValueOnce([]);
     reporter.onFinished();

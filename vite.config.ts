@@ -22,10 +22,10 @@ export default {
     coverage: {
       reporter: ['cobertura', 'text', 'html', 'lcov'],
       thresholds: {
-        statements: 93.8,
+        statements: 93.75,
         branches: 82.75,
         functions: 100,
-        lines: 93.8,
+        lines: 93.75,
         autoUpdate: true,
       },
       exclude: ['./*.config.{js,ts,mts}', 'dist'],

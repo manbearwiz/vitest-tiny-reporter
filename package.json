@@ -39,12 +39,12 @@
     "@tsconfig/strictest": "^2.0.2",
     "@tsconfig/vite-react": "^3.0.2",
     "@types/node": "^22.10.0",
-    "@vitest/coverage-v8": "^2.0.5",
-    "@vitest/ui": "^2.0.5",
+    "@vitest/coverage-v8": "^2.1.6",
+    "@vitest/ui": "^2.1.6",
     "happy-dom": "^15.7.4",
     "semantic-release": "^24.2.0",
     "typescript": "^5.2.2",
-    "vite": "^5.3.4"
+    "vite": "^6.0.1"
   },
   "dependencies": {
     "tinyrainbow": "^1.2.0"
@@ -57,9 +57,9 @@
   "module": "./dist/vitest-tiny-reporter.js",
   "exports": {
     ".": {
+      "types": "./dist/types/index.d.ts",
       "import": "./dist/vitest-tiny-reporter.js",
-      "require": "./dist/vitest-tiny-reporter.umd.cjs",
-      "types": "./dist/types/index.d.ts"
+      "require": "./dist/vitest-tiny-reporter.umd.cjs"
     }
   },
   "sideEffects": false

@@ -1,9 +1,10 @@
 import { getTests } from '@vitest/runner/utils';
 import c from 'tinyrainbow';
-import type { Task, Vitest } from 'vitest';
+import type { RunnerTask } from 'vitest';
+import type { Vitest } from 'vitest/node';
 import type { Reporter } from 'vitest/reporters';
 
-export class TinyReporter implements Reporter {
+export default class TinyReporter implements Reporter {
   // biome-ignore lint/style/noNonNullAssertion: Non-null assertion is allowed here because the onInit method is called before any other method
   ctx: Vitest = undefined!;
   protected verbose = false;
@@ -48,7 +49,7 @@ export class TinyReporter implements Reporter {
 
   padTitle = (str: string) => c.dim(`${str.padStart(11)} `);
 
-  getStateString(tasks: Task[], name = 'tests') {
+  getStateString(tasks: RunnerTask[], name = 'tests') {
     if (!tasks.length) {
       return c.dim(`no ${name}`);
     }
@@ -70,5 +71,3 @@ export class TinyReporter implements Reporter {
     );
   }
 }
-
-export default TinyReporter;
