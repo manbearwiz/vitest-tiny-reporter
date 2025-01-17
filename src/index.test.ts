@@ -51,7 +51,7 @@ describe('TinyReporter', () => {
     );
   });
 
-  it('should log a fail message when some tests fail', () => {
+  it('should log a fail message when a test fails', () => {
     mockVitestContext.state.getFiles.mockReturnValueOnce([
       {
         result: { state: 'fail' },
@@ -63,6 +63,25 @@ describe('TinyReporter', () => {
 
     expect(mockVitestContext.logger.log).toHaveBeenCalledWith(
       `${c.red(c.bold(c.inverse(' \u2716 FAIL ')))} ${c.red('1 test failed')}`,
+    );
+  });
+
+  it('should log a fail message when multiple tests fail', () => {
+    mockVitestContext.state.getFiles.mockReturnValueOnce([
+      {
+        result: { state: 'fail' },
+        type: 'test',
+      } as RunnerTask,
+      {
+        result: { state: 'fail' },
+        type: 'test',
+      } as RunnerTask,
+    ]);
+    mockVitestContext.state.getUnhandledErrors.mockReturnValueOnce([]);
+    reporter.onFinished();
+
+    expect(mockVitestContext.logger.log).toHaveBeenCalledWith(
+      `${c.red(c.bold(c.inverse(' \u2716 FAIL ')))} ${c.red('2 tests failed')}`,
     );
   });
 });

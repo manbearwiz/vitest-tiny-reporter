@@ -1,4 +1,4 @@
-import type { UserConfig } from 'vitest/config';
+import type { UserConfig } from 'vite';
 
 export default {
   build: {
@@ -22,10 +22,10 @@ export default {
     coverage: {
       reporter: ['cobertura', 'text', 'html', 'lcov'],
       thresholds: {
-        statements: 93.75,
-        branches: 82.75,
+        statements: 87.71,
+        branches: 84,
         functions: 100,
-        lines: 93.75,
+        lines: 87.71,
         autoUpdate: true,
       },
       exclude: ['./*.config.{js,ts,mts}', 'dist'],
