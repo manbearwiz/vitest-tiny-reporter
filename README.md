@@ -1,7 +1,7 @@
 # vitest-tiny-reporter
 
 [![npm](https://img.shields.io/npm/v/vitest-tiny-reporter?style=flat-square)](https://www.npmjs.com/package/vitest-tiny-reporter?activeTab=versions)
-[![npm bundle size](https://img.shields.io/bundlephobia/minzip/vitest-tiny-reporter?style=flat-square)](https://bundlephobia.com/package/vitest-tiny-reporter)
+[![install size](https://flat.badgen.net/packagephobia/install/vitest-tiny-reporter)](https://packagephobia.com/result?p=vitest-tiny-reporter)
 [![NPM](https://img.shields.io/npm/l/vitest-tiny-reporter?style=flat-square)](https://raw.githubusercontent.com/manbearwiz/vitest-tiny-reporter/master/LICENSE)
 [![npm](https://img.shields.io/npm/dt/vitest-tiny-reporter?style=flat-square)](https://www.npmjs.com/package/vitest-tiny-reporter)
 [![GitHub issues](https://img.shields.io/github/issues/manbearwiz/vitest-tiny-reporter?style=flat-square)](https://github.com/manbearwiz/vitest-tiny-reporter/issues)
