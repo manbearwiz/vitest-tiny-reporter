@@ -101,7 +101,6 @@ describe('TinyReporter', () => {
   it.each([
     { mode: 'skip', label: 'skipped' },
     { mode: 'todo', label: 'todo' },
-
   ])('should display $label tests', ({ mode, label }) => {
     mockVitestContext.state.getFiles.mockReturnValueOnce([
       { result: { state: 'pass' }, mode: 'run', type: 'test' } as RunnerTask,
