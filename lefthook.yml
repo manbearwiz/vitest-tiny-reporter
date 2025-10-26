@@ -3,6 +3,12 @@ no_tty: true
 output:
   - failure
 
+commit-msg:
+  commands:
+    commitlint:
+      run: npx commitlint --edit {1}
+      fail_text: "Commit message does not follow conventional commit format"
+
 pre-commit:
   parallel: true
   commands:
@@ -23,3 +29,5 @@ pre-push:
       fail_text: "Tests failed"
     check-format:
       run: npx @biomejs/biome check --no-errors-on-unmatched --files-ignore-unknown=true .
+    publint:
+      run: npm run build && npx --yes publint

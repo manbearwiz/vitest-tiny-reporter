@@ -1,5 +1,5 @@
 import c from 'tinyrainbow';
-import { type RunnerTask, beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, type RunnerTask, vi } from 'vitest';
 import type { Vitest } from 'vitest/node';
 import TinyReporter from './index';
 
@@ -7,11 +7,11 @@ const mockVitestContext = {
   state: {
     getFiles: vi.fn().mockReturnValue([]),
     getUnhandledErrors: vi.fn().mockReturnValue([]),
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    // biome-ignore lint/suspicious/noExplicitAny: it's a mock
   } as any,
   logger: {
     log: vi.fn(),
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    // biome-ignore lint/suspicious/noExplicitAny: it's a mock
   } as any,
 } satisfies Partial<Vitest>;
 

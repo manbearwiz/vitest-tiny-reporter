@@ -1,4 +1,4 @@
-import { type ViteUserConfig, coverageConfigDefaults } from 'vitest/config';
+import { coverageConfigDefaults, type ViteUserConfig } from 'vitest/config';
 
 export default {
   build: {
