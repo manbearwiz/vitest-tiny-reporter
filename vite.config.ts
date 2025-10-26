@@ -1,4 +1,4 @@
-import type { UserConfig } from 'vite';
+import { type ViteUserConfig, coverageConfigDefaults } from 'vitest/config';
 
 export default {
   build: {
@@ -20,15 +20,20 @@ export default {
   test: {
     environment: 'happy-dom',
     coverage: {
+      include: ['src/**/*.ts'],
       reporter: ['cobertura', 'text', 'html', 'lcov'],
       thresholds: {
-        statements: 87.71,
-        branches: 84,
+        statements: 100,
+        branches: 100,
         functions: 100,
-        lines: 87.71,
+        lines: 100,
         autoUpdate: true,
       },
-      exclude: ['./*.config.{js,ts,mts}', 'dist'],
+      exclude: [
+        ...coverageConfigDefaults.exclude,
+        './*.config.{js,ts,mts}',
+        'dist',
+      ],
     },
   },
-} satisfies UserConfig;
+} satisfies ViteUserConfig;
