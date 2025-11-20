@@ -74,5 +74,8 @@
       }
     }
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "overrides": {
+    "npm": "11.6.1"
+  }
 }

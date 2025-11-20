@@ -72,7 +72,7 @@ $ npx vitest run --reporter=vitest-tiny-reporter
       Tests  1 failed | 17 passed (18)
 ```
 
-### With default reporter
+#### With default reporter
 
 ```sh
 $ npx vitest run --reporter=default
