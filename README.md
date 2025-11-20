@@ -59,11 +59,9 @@ pre-commit:
 
 ## Output
 
-### Shell
+### With vitest-tiny-reporter
 
-In a shell, the output will look like this:
-
-#### With vitest-tiny-reporter
+<img width="272" alt="image" src="https://github.com/user-attachments/assets/312c4f5d-e56f-4662-bf2b-d395339031ce">
 
 ```sh
 $ npx vitest run --reporter=vitest-tiny-reporter
@@ -72,7 +70,9 @@ $ npx vitest run --reporter=vitest-tiny-reporter
       Tests  1 failed | 17 passed (18)
 ```
 
-#### With default reporter
+### With default reporter
+
+<img width="272" alt="image" src="https://github.com/user-attachments/assets/b68d930d-05f8-4281-8b14-9f8843e7dfb4">
 
 ```sh
 $ npx vitest run --reporter=default
@@ -148,17 +148,3 @@ Number of calls: 2
    Start at  22:06:43
    Duration  439ms (transform 44ms, setup 0ms, collect 101ms, tests 19ms, environment 103ms, prepare 51ms)
 ```
-
-**Result:** ~96% reduction in output length - essential when terminal output becomes AI agent context or when reviewing multiple parallel test runs.
-
-### VSCode
-
-When used with lefthook and committing in the VSCode UI, `vitest-tiny-reporter` shows actual usefull information.
-
-Default reporter:
-
-<img width="272" alt="image" src="https://github.com/user-attachments/assets/b68d930d-05f8-4281-8b14-9f8843e7dfb4">
-
-Tiny reporter:
-
-<img width="272" alt="image" src="https://github.com/user-attachments/assets/312c4f5d-e56f-4662-bf2b-d395339031ce">
