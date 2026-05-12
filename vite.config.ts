@@ -7,7 +7,7 @@ export default {
       entry: 'src/index.ts',
       name: 'vitest-tiny-reporter',
     },
-    rollupOptions: {
+    rolldownOptions: {
       external: ['tinyrainbow'],
       output: {
         globals: {
