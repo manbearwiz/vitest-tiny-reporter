@@ -1,8 +1,21 @@
-import { getTests } from '@vitest/runner/utils';
 import c from 'tinyrainbow';
-import type { RunnerTask } from 'vitest';
-import type { Vitest } from 'vitest/node';
-import type { Reporter } from 'vitest/reporters';
+import type { RunnerTask, SerializedError } from 'vitest';
+import type { Reporter, TestModule, Vitest } from 'vitest/node';
+
+type Outcome = 'passed' | 'failed' | 'skipped' | 'todo' | 'pending' | 'queued';
+
+const getTests = (tasks: RunnerTask[]): RunnerTask[] =>
+  tasks.flatMap((task) =>
+    task.type === 'suite' ? getTests(task.tasks) : [task],
+  );
+
+const getLegacyOutcome = (task: RunnerTask): Outcome => {
+  if (task.mode === 'todo') return 'todo';
+  if (task.mode === 'skip') return 'skipped';
+  if (task.result?.state === 'pass') return 'passed';
+  if (task.result?.state === 'fail') return 'failed';
+  return 'pending';
+};
 
 export default class TinyReporter implements Reporter {
   // biome-ignore lint/style/noNonNullAssertion: Non-null assertion is allowed here because the onInit method is called before any other method
@@ -13,15 +26,44 @@ export default class TinyReporter implements Reporter {
     this.ctx = ctx;
   }
 
+  // Vitest 2 only: Vitest 3 calls both hooks, and Vitest 4+ only calls onTestRunEnd.
   onFinished(
     files = this.ctx.state.getFiles(),
     errors = this.ctx.state.getUnhandledErrors(),
   ) {
-    const { logger } = this.ctx;
-    const tests = getTests(files);
-    const failedTests = tests.filter((i) => i.result?.state === 'fail').length;
+    if (Number.parseInt(this.ctx.version, 10) >= 3) {
+      return;
+    }
 
-    const passed = !(failedTests + errors.length);
+    this.printSummary(
+      files.map(getLegacyOutcome),
+      getTests(files).map(getLegacyOutcome),
+      errors.length,
+    );
+  }
+
+  onTestRunEnd(
+    testModules: ReadonlyArray<TestModule>,
+    unhandledErrors: ReadonlyArray<SerializedError>,
+  ) {
+    const tests = testModules.flatMap((testModule) =>
+      Array.from(testModule.children.allTests()),
+    );
+
+    this.printSummary(
+      testModules.map((testModule) => testModule.state()),
+      tests.map((test) =>
+        test.options.mode === 'todo' ? 'todo' : test.result().state,
+      ),
+      unhandledErrors.length,
+    );
+  }
+
+  private printSummary(files: Outcome[], tests: Outcome[], errorCount: number) {
+    const { logger } = this.ctx;
+    const failedTests = tests.filter((i) => i === 'failed').length;
+
+    const passed = !(failedTests + errorCount);
     const status = passed ? '\u2714 PASS' : '\u2716 FAIL';
     const statusColor = passed ? c.green : c.red;
 
@@ -32,13 +74,13 @@ export default class TinyReporter implements Reporter {
           : `${failedTests} test${failedTests > 1 ? 's' : ''} failed`,
       )}`,
     );
-    logger.log(this.padTitle('Test Files'), this.getStateString(files));
-    logger.log(this.padTitle('Tests'), this.getStateString(tests));
+    logger.log(this.padTitle('Test Files'), this.formatOutcomes(files));
+    logger.log(this.padTitle('Tests'), this.formatOutcomes(tests));
 
-    if (errors.length) {
+    if (errorCount) {
       logger.log(
         this.padTitle('Errors'),
-        c.bold(c.red(`${errors.length} error${errors.length > 1 ? 's' : ''}`)),
+        c.bold(c.red(`${errorCount} error${errorCount > 1 ? 's' : ''}`)),
       );
     }
 
@@ -50,14 +92,18 @@ export default class TinyReporter implements Reporter {
   padTitle = (str: string) => c.dim(`${str.padStart(11)} `);
 
   getStateString(tasks: RunnerTask[], name = 'tests') {
-    if (!tasks.length) {
+    return this.formatOutcomes(tasks.map(getLegacyOutcome), name);
+  }
+
+  private formatOutcomes(outcomes: Outcome[], name = 'tests') {
+    if (!outcomes.length) {
       return c.dim(`no ${name}`);
     }
 
-    const passed = tasks.filter((i) => i.result?.state === 'pass').length;
-    const failed = tasks.filter((i) => i.result?.state === 'fail').length;
-    const skipped = tasks.filter((i) => i.mode === 'skip').length;
-    const todo = tasks.filter((i) => i.mode === 'todo').length;
+    const passed = outcomes.filter((i) => i === 'passed').length;
+    const failed = outcomes.filter((i) => i === 'failed').length;
+    const skipped = outcomes.filter((i) => i === 'skipped').length;
+    const todo = outcomes.filter((i) => i === 'todo').length;
 
     return (
       [
@@ -67,7 +113,7 @@ export default class TinyReporter implements Reporter {
         todo && c.gray(`${todo} todo`),
       ]
         .filter(Boolean)
-        .join(c.dim(' | ')) + c.gray(` (${tasks.length})`)
+        .join(c.dim(' | ')) + c.gray(` (${outcomes.length})`)
     );
   }
 }

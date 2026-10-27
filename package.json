@@ -34,7 +34,6 @@
   },
   "homepage": "https://github.com/manbearwiz/vitest-tiny-reporter#readme",
   "peerDependencies": {
-    "@vitest/runner": "^2.0.0 || ^3.0.2 || ^4.0.0",
     "vitest": "^2.0.0 || ^3.0.2 || ^4.0.0"
   },
   "devDependencies": {
