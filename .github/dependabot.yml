@@ -8,3 +8,7 @@ updates:
       prefix: fix
       prefix-development: build
       include: scope
+    ignore:
+      # Match the oldest Node.js major in package.json devEngines, not the latest.
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
