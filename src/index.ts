@@ -1,21 +1,8 @@
 import c from 'tinyrainbow';
-import type { RunnerTask, SerializedError } from 'vitest';
+import type { SerializedError } from 'vitest';
 import type { Reporter, TestModule, Vitest } from 'vitest/node';
 
 type Outcome = 'passed' | 'failed' | 'skipped' | 'todo' | 'pending' | 'queued';
-
-const getTests = (tasks: RunnerTask[]): RunnerTask[] =>
-  tasks.flatMap((task) =>
-    task.type === 'suite' ? getTests(task.tasks) : [task],
-  );
-
-const getLegacyOutcome = (task: RunnerTask): Outcome => {
-  if (task.mode === 'todo') return 'todo';
-  if (task.mode === 'skip') return 'skipped';
-  if (task.result?.state === 'pass') return 'passed';
-  if (task.result?.state === 'fail') return 'failed';
-  return 'pending';
-};
 
 export default class TinyReporter implements Reporter {
   // biome-ignore lint/style/noNonNullAssertion: Non-null assertion is allowed here because the onInit method is called before any other method
@@ -24,22 +11,6 @@ export default class TinyReporter implements Reporter {
 
   onInit(ctx: Vitest) {
     this.ctx = ctx;
-  }
-
-  // Vitest 2 only: Vitest 3 calls both hooks, and Vitest 4+ only calls onTestRunEnd.
-  onFinished(
-    files = this.ctx.state.getFiles(),
-    errors = this.ctx.state.getUnhandledErrors(),
-  ) {
-    if (Number.parseInt(this.ctx.version, 10) >= 3) {
-      return;
-    }
-
-    this.printSummary(
-      files.map(getLegacyOutcome),
-      getTests(files).map(getLegacyOutcome),
-      errors.length,
-    );
   }
 
   onTestRunEnd(
@@ -91,13 +62,9 @@ export default class TinyReporter implements Reporter {
 
   padTitle = (str: string) => c.dim(`${str.padStart(11)} `);
 
-  getStateString(tasks: RunnerTask[], name = 'tests') {
-    return this.formatOutcomes(tasks.map(getLegacyOutcome), name);
-  }
-
-  private formatOutcomes(outcomes: Outcome[], name = 'tests') {
+  private formatOutcomes(outcomes: Outcome[]) {
     if (!outcomes.length) {
-      return c.dim(`no ${name}`);
+      return c.dim('no tests');
     }
 
     const passed = outcomes.filter((i) => i === 'passed').length;
