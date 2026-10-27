@@ -36,6 +36,21 @@
   "peerDependencies": {
     "vitest": "^3.0.2 || ^4.0.0 || ^5.0.0"
   },
+  "engines": {
+    "node": ">=18"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": ">=22.12",
+      "onFail": "warn"
+    },
+    "packageManager": {
+      "name": "npm",
+      "version": ">=11",
+      "onFail": "warn"
+    }
+  },
   "devDependencies": {
     "@biomejs/biome": "^2.3.0",
     "@commitlint/cli": "^21.0.2",
